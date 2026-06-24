@@ -115,8 +115,6 @@ function slugify(s){
 // STAMMDATEN
 // ══════════════════════════════════════════════════════════════════════════════
 // Line 117 — replace this:
-const STUDIO_NAMEN = ["Studio 1 – Krefeld Mitte","Studio 2 – Krefeld Nord","Studio 3 – Krefeld Süd"]
-
 // With this:
 const STUDIO_NAMEN = [
   "Studio 01 – Krefeld Mitte",
