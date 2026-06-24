@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { api } from "./api"
+
 // ══════════════════════════════════════════════════════════════════════════════
 // DATE / WEEK HELPERS
 // ══════════════════════════════════════════════════════════════════════════════
@@ -322,6 +323,14 @@ export default function App() {
   const [toast, setToast] = useState(null)
   const [modal, setModal] = useState(null) // {type:"neu"} | {type:"edit", kurs}
 
+  const [studioNamen, setStudioNamen] = useState(STUDIO_NAMEN) // fallback to hardcoded
+
+useEffect(() => {
+  api.studios()
+    .then(data => setStudioNamen(data.map(s => s.name)))
+    .catch(() => console.warn("Backend nicht erreichbar, nutze lokale Daten"))
+}, [])
+
   const showToast = (msg, color="#185FA5") => {
     setToast({msg, color})
     setTimeout(() => setToast(null), 3500)
@@ -462,7 +471,7 @@ export default function App() {
         </div>
       </div>
 
-      {modal && <KursModal modal={modal} onClose={()=>setModal(null)} kurse={kurse} setKurse={setKurse} mitarbeiter={mitarbeiter} showToast={showToast} addBenachrichtigung={addBenachrichtigung}/>}
+      {modal && <KursModal modal={modal} onClose={()=>setModal(null)} kurse={kurse} setKurse={setKurse} mitarbeiter={mitarbeiter} showToast={showToast} addBenachrichtigung={addBenachrichtigung} studioNamen={studioNamen}/>}
       {toast && <div style={{position:"fixed",bottom:24,right:24,background:toast.color,color:"#fff",padding:"10px 18px",borderRadius:8,fontSize:13,zIndex:200,maxWidth:360,boxShadow:"0 4px 16px rgba(0,0,0,.15)"}}>{toast.msg}</div>}
     </div>
   )
@@ -996,7 +1005,7 @@ function Benachrichtigungen({benachrichtigungen, setBenachrichtigungen}) {
 // ══════════════════════════════════════════════════════════════════════════════
 // KURS MODAL (Anlegen + Bearbeiten, mit Konfliktprüfung - Fix #4 #7)
 // ══════════════════════════════════════════════════════════════════════════════
-function KursModal({modal, onClose, kurse, setKurse, mitarbeiter, showToast, addBenachrichtigung}) {
+function KursModal({modal, onClose, kurse, setKurse, mitarbeiter, showToast, addBenachrichtigung, studioNamen}) {
   const editKurs = modal.type==="edit" ? modal.kurs : null
   const [name, setName]   = useState(editKurs?.name || "")
   const [typ, setTyp]     = useState(editKurs?.kurstyp_name || "Yoga")
@@ -1052,7 +1061,7 @@ function KursModal({modal, onClose, kurse, setKurse, mitarbeiter, showToast, add
             </select></div>
           <div><label style={labelStyle}>Studio</label>
             <select value={studio} onChange={e=>{setStudio(e.target.value);setTrainer("")}} style={{...inputStyle,width:"100%"}}>
-              {STUDIO_NAMEN.map(s=><option key={s}>{s}</option>)}
+            {studioNamen.map(s=><option key={s}>{s}</option>)}
             </select></div>
           <div><label style={labelStyle}>Datum</label>
             <input type="date" value={datum} onChange={e=>setDatum(e.target.value)} style={{...inputStyle,width:"100%"}}/></div>
