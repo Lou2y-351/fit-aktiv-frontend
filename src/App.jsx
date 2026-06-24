@@ -309,6 +309,7 @@ function LoginPage({onLogin}) {
 // ══════════════════════════════════════════════════════════════════════════════
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null)
+  const [sidebarOpen, setSidebarOpen] = useState(true)   
   const [page, setPage] = useState("dashboard")
   const [kurse, setKurse] = useState(ALL_KURSE_INITIAL)
   const [mitarbeiter, setMitarbeiter] = useState(ALL_MITARBEITER_INITIAL)
@@ -388,49 +389,67 @@ export default function App() {
   const navItems = isAdmin ? adminNav : trainerNav
 
   return (
-    <div style={{display:"flex",minHeight:"100vh",background:"#F1EFE8",fontFamily:"system-ui,sans-serif",fontSize:14,color:"#2C2C2A"}}>
-      {/* Sidebar */}
-      <div style={{width:220,background:"#fff",borderRight:"0.5px solid #D3D1C7",display:"flex",flexDirection:"column",flexShrink:0}}>
-        <div style={{padding:"20px 16px 14px",borderBottom:"0.5px solid #D3D1C7"}}>
-          <div style={{fontWeight:600,fontSize:16}}>💪 Fit &amp; Aktiv</div>
-          <div style={{fontSize:11,color:"#888780",marginTop:2}}>Kursplanungssystem</div>
-        </div>
-        <div style={{padding:"8px 0",flex:1}}>
-          {navItems.map(n=>(
-            <div key={n.id} onClick={()=>setPage(n.id)}
-              style={{display:"flex",alignItems:"center",gap:10,padding:"10px 16px",cursor:"pointer",
-                borderLeft:`3px solid ${page===n.id?"#185FA5":"transparent"}`,
-                background:page===n.id?"#F1EFE8":"transparent",
-                color:page===n.id?"#2C2C2A":"#888780",fontSize:13}}>
-              <span>{n.icon}</span>{n.label}
-              {n.id==="benachrichtigungen"&&ungelesen>0&&
-                <span style={{marginLeft:"auto",background:"#A32D2D",color:"#fff",fontSize:10,padding:"1px 6px",borderRadius:10}}>{ungelesen}</span>}
-            </div>
-          ))}
-        </div>
-        <div style={{padding:16,borderTop:"0.5px solid #D3D1C7"}}>
-          <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
-            <Avatar name={currentUser.name}/>
-            <div>
-              <div style={{fontSize:13,fontWeight:500}}>{currentUser.name}</div>
-              <div style={{fontSize:11,color:"#888780"}}>{isAdmin?"Administrator":"Trainer"}</div>
-            </div>
-          </div>
-          <button onClick={()=>setCurrentUser(null)}
-            style={{...btnStyle("#FCEBEB","#791F1F",true),width:"100%",justifyContent:"center",fontSize:12}}>
-            🚪 Abmelden
-          </button>
-        </div>
+  <div style={{display:"flex",minHeight:"100vh",background:"#F1EFE8",fontFamily:"system-ui,sans-serif",fontSize:14,color:"#2C2C2A"}}>
+    {/* Sidebar */}
+    <div style={{
+      width: sidebarOpen ? 220 : 0,
+      minWidth: sidebarOpen ? 220 : 0,
+      background:"#fff",
+      borderRight:"0.5px solid #D3D1C7",
+      display:"flex",
+      flexDirection:"column",
+      flexShrink:0,
+      overflow:"hidden",
+      transition:"width 0.25s ease, min-width 0.25s ease"
+    }}>
+      <div style={{padding:"20px 16px 14px",borderBottom:"0.5px solid #D3D1C7",minWidth:220}}>
+        <div style={{fontWeight:600,fontSize:16}}>💪 Fit &amp; Aktiv</div>
+        <div style={{fontSize:11,color:"#888780",marginTop:2}}>Kursplanungssystem</div>
       </div>
+      <div style={{padding:"8px 0",flex:1,minWidth:220}}>
+        {navItems.map(n=>(
+          <div key={n.id} onClick={()=>setPage(n.id)}
+            style={{display:"flex",alignItems:"center",gap:10,padding:"10px 16px",cursor:"pointer",
+              borderLeft:`3px solid ${page===n.id?"#185FA5":"transparent"}`,
+              background:page===n.id?"#F1EFE8":"transparent",
+              color:page===n.id?"#2C2C2A":"#888780",fontSize:13}}>
+            <span>{n.icon}</span>{n.label}
+            {n.id==="benachrichtigungen"&&ungelesen>0&&
+              <span style={{marginLeft:"auto",background:"#A32D2D",color:"#fff",fontSize:10,padding:"1px 6px",borderRadius:10}}>{ungelesen}</span>}
+          </div>
+        ))}
+      </div>
+      <div style={{padding:16,borderTop:"0.5px solid #D3D1C7",minWidth:220}}>
+        <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:10}}>
+          <Avatar name={currentUser.name}/>
+          <div>
+            <div style={{fontSize:13,fontWeight:500}}>{currentUser.name}</div>
+            <div style={{fontSize:11,color:"#888780"}}>{isAdmin?"Administrator":"Trainer"}</div>
+          </div>
+        </div>
+        <button onClick={()=>setCurrentUser(null)}
+          style={{...btnStyle("#FCEBEB","#791F1F",true),width:"100%",justifyContent:"center",fontSize:12}}>
+          🚪 Abmelden
+        </button>
+      </div>
+    </div>
 
       {/* Main */}
-      <div style={{flex:1,overflow:"auto"}}>
-        <div style={{background:"#fff",borderBottom:"0.5px solid #D3D1C7",padding:"12px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:10}}>
+    <div style={{flex:1,overflow:"auto"}}>
+      <div style={{background:"#fff",borderBottom:"0.5px solid #D3D1C7",padding:"12px 24px",display:"flex",alignItems:"center",justifyContent:"space-between",position:"sticky",top:0,zIndex:10}}>
+        <div style={{display:"flex",alignItems:"center",gap:12}}>
+          {/* Hamburger toggle */}
+          <button onClick={()=>setSidebarOpen(o=>!o)}
+            style={{background:"none",border:"0.5px solid #D3D1C7",borderRadius:6,cursor:"pointer",
+              fontSize:16,padding:"4px 8px",color:"#5F5E5A",lineHeight:1}}>
+            {sidebarOpen ? "✕" : "☰"}
+          </button>
           <div style={{fontWeight:500,fontSize:16}}>{PAGE_TITLES[page]||page}</div>
-          <div style={{display:"flex",gap:8,alignItems:"center"}}>
-            {isAdmin && <button onClick={()=>setModal({type:"neu"})} style={btnStyle("#185FA5","#fff")}>+ Neuer Kurs</button>}
-          </div>
         </div>
+        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+          {isAdmin && <button onClick={()=>setModal({type:"neu"})} style={btnStyle("#185FA5","#fff")}>+ Neuer Kurs</button>}
+        </div>
+      </div>
 
         <div style={{padding:24}}>
           {page==="dashboard"    && <Dashboard kurse={kurse} mitarbeiter={mitarbeiter} krank={krank} setPage={setPage} isAdmin={isAdmin}/>}
