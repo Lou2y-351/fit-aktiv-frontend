@@ -114,6 +114,34 @@ function slugify(s){
 // ══════════════════════════════════════════════════════════════════════════════
 // STAMMDATEN
 // ══════════════════════════════════════════════════════════════════════════════
+// Line 117 — replace this:
+const STUDIO_NAMEN = ["Studio 1 – Krefeld Mitte","Studio 2 – Krefeld Nord","Studio 3 – Krefeld Süd"]
+
+// With this:
+const STUDIO_NAMEN = [
+  "Studio 01 – Krefeld Mitte",
+  "Studio 02 – Krefeld Nord",
+  "Studio 03 – Krefeld Süd",
+  "Studio 04 – Krefeld West",
+  "Studio 05 – Krefeld Ost",
+  "Studio 06 – Krefeld Uerdingen",
+  "Studio 07 – Krefeld Bockum",
+  "Studio 08 – Krefeld Hüls",
+  "Studio 09 – Krefeld Fischeln",
+  "Studio 10 – Krefeld Oppum",
+  "Studio 11 – Krefeld Linn",
+  "Studio 12 – Krefeld Gartenstadt",
+  "Studio 13 – Krefeld Dießem",
+  "Studio 14 – Krefeld Elfrath",
+  "Studio 15 – Krefeld Traar",
+  "Studio 16 – Duisburg Zentrum",
+  "Studio 17 – Mönchengladbach",
+  "Studio 18 – Neuss Innenstadt",
+  "Studio 19 – Viersen",
+  "Studio 20 – Willich",
+  "Studio 21 – Kempen",
+  "Studio 22 – Tönisvorst",
+]
 const KURSTYPEN   = ["Yoga","Pilates","Spinning","Krafttraining","Functional Fit"]
 const STUDIO_NAMEN = ["Studio 1 – Krefeld Mitte","Studio 2 – Krefeld Nord","Studio 3 – Krefeld Süd"]
 const WOCHENTAGE  = ["Mo","Di","Mi","Do","Fr"]
