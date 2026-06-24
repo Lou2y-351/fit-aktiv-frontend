@@ -461,7 +461,7 @@ useEffect(() => {
       </div>
 
         <div style={{padding:24}}>
-          {page==="dashboard"    && <Dashboard kurse={kurse} mitarbeiter={mitarbeiter} krank={krank} setPage={setPage} isAdmin={isAdmin}/>}
+          {page==="dashboard" && <Dashboard kurse={kurse} mitarbeiter={mitarbeiter} krank={krank} setPage={setPage} isAdmin={isAdmin} studioNamen={studioNamen}/>}
           {page==="kursplan"     && <Kursplan kurse={kurse}/>}
           {page==="meinplan"     && <MeinPlan kurse={kurse} currentUser={currentUser} mitarbeiter={mitarbeiter}/>}
           {page==="kurse"        && <Kurse kurse={kurse} setModal={setModal} markiereKursAusgefallen={markiereKursAusgefallen} reaktiviereKurs={reaktiviereKurs} loescheKurs={loescheKurs}/>}
