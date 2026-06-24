@@ -141,7 +141,6 @@ const STUDIO_NAMEN = [
   "Studio 22 – Tönisvorst",
 ]
 const KURSTYPEN   = ["Yoga","Pilates","Spinning","Krafttraining","Functional Fit"]
-const STUDIO_NAMEN = ["Studio 1 – Krefeld Mitte","Studio 2 – Krefeld Nord","Studio 3 – Krefeld Süd"]
 const WOCHENTAGE  = ["Mo","Di","Mi","Do","Fr"]
 const ZEITEN      = ["07:00","08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"]
 const ZEITEN_KURS = ["08:00","09:00","10:00","11:00","12:00","14:00","15:00","16:00","17:00","18:00"]
